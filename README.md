@@ -12,7 +12,7 @@
 
 임우영, pigwoo98@pusan.ac.kr, 알고리즘 설계
 
-김영수, doctorstrange@marvel.com, 백앤드 개발
+김영수, kimyeong3732@pusan.ac.kr, 백앤드 개발
 
 ### 3. 시스템 구성도
 
