@@ -131,14 +131,14 @@ STATICFILES_DIRS = (
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-file_path = 'C:\\Users\pigwo\\OneDrive\\바탕 화면\\파일들\\Coding\\Python\\Music_Recommend\\polls\\Datasets\\song_meta_with_likes.json'
+file_path = os.path.join(BASE_DIR, 'polls', 'Datasets', 'song_meta_with_likes.json')
 with open(file_path, 'r', encoding='utf-8') as f:
     json_data = json.load(f)
 SONG_DATA = pd.DataFrame(json_data)
 SONG_DATA = SONG_DATA.drop(['album_name', 'song_gn_gnr_basket'], axis=1)
 
-train_dir = 'C:\\Users\pigwo\\OneDrive\\바탕 화면\\파일들\\Coding\\Python\\Music_Recommend\\polls\\Datasets\\train_datas.json'
-with open(train_dir, 'r', encoding='utf-8') as f:
+file_path = os.path.join(BASE_DIR, 'polls', 'Datasets', 'train_datas.json')
+with open(file_path, 'r', encoding='utf-8') as f:
     json_data = json.load(f)
 TRAIN_DATA = pd.DataFrame(json_data)
 TRAIN_DATA.rename(columns={'songs':'song_id'}, inplace=True)
