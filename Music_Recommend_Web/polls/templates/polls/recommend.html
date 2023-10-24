@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta charset="UTF-8">
+    <title>음악 추천 페이지</title>
+
+    <style type="text/css">
+        @font-face {
+            font-family: "CookieRun_Bold";
+            src: url("../static/fonts/CookieRunFont_TTF/CookieRun Bold.ttf");
+        }
+
+        @font-face {
+            font-family: "CookieRun_Regular";
+            src: url("../static/fonts/CookieRunFont_TTF/CookieRun Regular.ttf");
+        }
+
+        .addbr {
+            margin-top: 10px;
+        }
+
+        h1 {
+            font-family: "CookieRun_Bold";
+            font-size: 50px;
+            position: relative;
+            padding-left: 50px;
+        }
+
+        h1:before, h1:after {
+            content: '>';
+            display: inline-block;
+            position: relative;
+            top: 1px;
+            height: 100%;
+            font-size: 1.25em;
+            color: #50a9e1;
+            transition: all 0.5s ease;
+        }
+
+        h1:after {
+            content: '<';
+        }
+
+        h1:hover:before {
+            transform: translateX(-5px);
+        }
+
+        h1:hover:after {
+            transform: translateX(5px);
+        }
+
+        h2 {
+            display: inline;
+            font-family: "CookieRun_Regular";
+            font-size: 30px;
+            margin-left: 50px;
+            margin-right: 250px;
+            border-radius: 20px 20px 20px 0;
+            border-bottom: 5px solid #B9C4C4;
+            padding: 0.5em;
+            background: #CEDADA;
+        }
+
+        body {
+            background: powderblue;
+        }
+
+        p {
+            font-family: "CookieRun_Regular";
+            font-size: 20px;
+        }
+
+        .searchbasket {
+            float: left;
+            margin-left: 60px;
+        }
+
+        .searchblank {
+            width: 1450px;
+            height: 50px;
+            font-family: "CookieRun_Regular";
+            font-size: 30px;
+            padding-left: 20px;
+            padding-right: 20px;
+            border: 3px solid #50a9e1;
+            border-radius: 10px;
+        }
+
+        .button {
+            font-family: "CookieRun_Regular";
+            font-weight: 200px;
+            text-align: center;
+            line-height: 20px;
+            transition: all 0.2s;
+            box-shadow: 0px 0px 0px 0px #50a9e1;
+        }
+
+        .button:hover {
+            box-shadow: 0px 0px 0px 5px #50a9e1;
+        }
+
+        .blank {
+            width: 100px;
+            height: 58px;
+            font-size: 20px;
+            background: #50a9e1;
+            border: 0px solid #50a9e1;
+            margin-left: 1px;
+            border-radius: 10px;
+        }
+
+        .reset {
+            width: 150px;
+            height: 58px;
+            font-size: 20px;
+            background: #50a9e1;
+            border: 0px solid #50a9e1;
+            margin-top: 22px;
+            margin-left: 7px;
+            border-radius: 10px;
+        }
+
+        .add {
+            width: 180px;
+            height: 58px;
+            font-size: 20px;
+            background: lightblue;
+            border: 0px solid lightblue;
+            margin-top: 22px;
+            margin-left: 997px;
+            border-radius: 10px;
+        }
+        .add:hover {
+            box-shadow: 0px 0px 0px 5px lightblue;
+        }
+
+        .recommend {
+            width: 240px;
+            height: 220px;
+            font-size: 20px;
+            background: lightblue;
+            border: 0px solid lightblue;
+            margin-left: -220px;
+            margin-top: 70px;
+            border-radius: 10px;
+        }
+        .recommend:hover {
+            box-shadow: 0px 0px 0px 5px lightblue;
+        }
+
+        .searchblock {
+            display: block;
+            background: white;
+            border-radius: 20px;
+            margin-left: 50px;
+            margin-right: 50px;
+            padding-left: 50px;
+            padding-right: 50px;
+            padding-top: 30px;
+            padding-bottom: 50px;
+        }
+
+        .scrollbar {
+            display: block;
+            max-height: 350px;
+            overflow: auto;
+            margin-right: 50px;
+        }
+        .searchtable, .recommendtable {
+            display: block;
+            padding-left: 48px;
+        }
+        .searchtable th, .recommendtable th {
+            position: sticky;
+            font-family: "CookieRun_Bold";
+            font-size: 20px;
+            top: 0;
+            background: lightblue;
+            padding: .5em 1em;
+        }
+        .searchtable td, .recommendtable td {
+            font-family: "CookieRun_Regular";
+            font-size: 20px;
+            padding: .5em 1em;
+        }
+        .searchtable tr:nth-child(2n), .recommendtable tr:nth-child(2n) {
+            background: #f5f9fc;
+        }
+        .searchtable tr:nth-child(odd), .recommendtable tr:nth-child(odd) {
+            background-color: #ebf3f9;
+        }
+        .searchtable th:nth-of-type(1), .searchtable td:nth-of-type(1) {
+            width: 640px;
+        }
+        .searchtable th:nth-of-type(2), .searchtable td:nth-of-type(2) {
+            width: 440px;
+        }
+        .searchtable th:nth-of-type(3) {
+            width: 340px;
+        }
+        .searchtable td:nth-of-type(3) {
+            text-align: center;
+            width: 340px;
+        }
+        .searchtable th:nth-of-type(4) {
+            width: 240px;
+        }
+        .searchtable td:nth-of-type(4) {
+            text-align: center;
+            width: 240px;
+        }
+        .searchtable th:last-child {
+            width: 190px;
+        }
+        .searchtable td:last-child {
+            text-align: center;
+            width: 190px;
+        }
+
+        .recommendtable th:nth-of-type(1), .recommendtable td:nth-of-type(1) {
+            width: 690px;
+        }
+        .recommendtable th:nth-of-type(2) {
+            width: 100px;
+        }
+        .recommendtable td:nth-of-type(2) {
+            text-align: center;
+            width: 100px;
+        }
+        .selectedsong th:nth-of-type(2), .selectedsong td:nth-of-type(2) {
+            width: 430px;
+        }
+        .recommendtable th:nth-of-type(3), .recommendtable td:nth-of-type(3) {
+            width: 300px;
+        }
+        .recommendtable th:nth-of-type(4) {
+            width: 120px;
+        }
+        .recommendtable td:nth-of-type(4) {
+            text-align: center;
+            width: 120px;
+        }
+        .recommendtable th:nth-of-type(5), .recommendtable td:nth-of-type(5) {
+            width: 290px;
+        }
+        .recommendtable th:last-child {
+            width: 120px;
+        }
+        .recommendtable td:last-child {
+            text-align: center;
+            width: 120px;
+        }
+        .selectedsong th:last-child, .selectedsong td:last-child {
+            width: 400px;
+        }
+
+        .selectbasket {
+            background: white;
+            border-radius: 20px;
+            margin-left: 50px;
+            margin-right: 50px;
+            padding-left: 50px;
+            padding-right: 50px;
+            padding-top: 60px;
+        }
+
+        .selectblock {
+            width: 1020px;
+            height: 200px;
+            overflow-y: auto;
+            border: 3px solid #50a9e1;
+            border-radius: 0px 20px 20px 20px;
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            margin-left: 50px;
+            margin-top: 30px;
+            margin-bottom: 50px;
+        }
+
+        .checkblock {
+            font-family: "CookieRun_Regular";
+            font-size: 17px;
+            width: 200px;
+            height: 180px;
+            border: 3px solid #50a9e1;
+            border-radius: 0px 20px 20px 20px;
+            padding-top: 40px;
+            padding-left: 20px;
+            padding-right: 20px;
+            margin-left: 20px;
+            margin-top: 30px;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>음악 추천 페이지</h1>
+
+    <!-- 사용자 입력 폼 -->
+    <div class="searchbasket">
+        <form method="post" action="{% url 'recommend_music' %}">
+            {% csrf_token %}
+            <br>
+            <input type="text" name="song_name" class="searchblank" id="song_name" placeholder="음악 이름" required>
+            <input type="submit" class="blank button" value="음악 검색">
+        </form>
+    </div>
+
+    <form method="post" action="{% url 'clear_session' %}">
+        {% csrf_token %}
+        <button type="submit" id="song_clear" class="reset button" name="song_clear">음악 목록<br>초기화</button>
+    </form>
+
+    <br>
+
+    <!-- 검색 결과 표시 -->
+    <div class="searchblock">
+        {% if search_results %}
+            <form method="post" action="{% url 'recommend_music' %}">
+                {% csrf_token %}
+                <div class="tabletop">
+                    <h2>검색 결과</h2>
+                    <input type="submit" class="add button" value="선택한 음악 추가">
+                </div>
+                <br>
+                <div class="scrollbar">
+                    <table class="searchtable" align="center">
+                        <thead>
+                            <tr>
+                                <th>노래 제목</th>
+                                <th>아티스트</th>
+                                <th>발매일</th>
+                                <th>ID</th>
+                                <th>선택</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for result in search_results %}
+                                <tr>
+                                    <td>{{ result.4 }}</td>
+                                    <td>
+                                        {% for artist in result.5 %}
+
+                                        {% if not forloop.last %}
+                                        {{ artist }},
+
+                                        {% else %}
+                                        {{ artist }}
+
+                                        {% endif %}
+
+                                        {% endfor %}
+                                    </td>
+                                    <td>
+                                        {{ result.1.0 }}{{ result.1.1 }}{{ result.1.2 }}{{ result.1.3 }}년
+                                        {{ result.1.4 }}{{ result.1.5 }}월
+                                        {{ result.1.6 }}{{ result.1.7 }}일
+                                    </td>
+                                    <td>{{ result.6 }}</td>
+                                    <td>
+                                        <input type="radio" name="selected_song" value="{{ result.6 }}">
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+        {% else %}
+            <p>검색 결과가 없습니다.</p>
+            <br>
+        {% endif %}
+    </div>
+
+    <br>
+
+    <div class="searchbasket">
+        <form method="post" action="{% url 'recommend_music' %}">
+            {% csrf_token %}
+            <br>
+            <input type="text" name="tag_name" class="searchblank" id="tag_name" placeholder="태그 이름" required>
+            <input type="submit" class="blank button" value="태그 추가">
+        </form>
+    </div>
+
+    <form method="post" action="{% url 'clear_session' %}">
+        {% csrf_token %}
+        <button type="submit" id="tag_clear" class="reset button" name="tag_clear">태그 목록<br>초기화</button>
+    </form>
+
+    <!-- 추가 -->
+    <br>
+    <div class="selectbasket">
+        <div>
+            <h2>추가된 음악 목록</h2>
+
+            {% if my_songs_df %}
+            <div style="margin-top: 30px;" class="scrollbar addbr">
+                {% csrf_token %}
+                <table class="recommendtable selectedsong" align="center">
+                    <thead>
+                        <tr>
+                            <th>음악 제목</th>
+                            <th>태그</th>
+                            <th>장르</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for song in my_songs_df %}
+                            <tr>
+                                <td>{{ song.7 }}</td>
+                                <td>
+                                    {% for tag in song.0 %}
+                                        {% if not forloop.last %}
+                                        {{ tag }},
+
+                                        {% else %}
+                                        {{ tag }}
+
+                                        {% endif %}
+                                    {% endfor %}
+                                </td>
+                                <td>
+                                    {% for genre in song.3 %}
+                                        {% if not forloop.last %}
+                                        {{ genre }},
+
+                                        {% else %}
+                                        {{ genre }}
+
+                                        {% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
+        </div>
+
+        <br>
+        <br>
+        <div style="display: flex;">
+            <div>
+                <h2>추가된 태그 목록</h2>
+                <p class="selectblock">
+                    {% for tag in my_tags %}
+                        {% if not forloop.last %}
+                        {{ tag }},
+
+                        {% else %}
+                        {{ tag }}
+
+                        {% endif %}
+                    {% endfor %}
+                </p>
+            </div>
+
+            <br>
+
+            <form method="post" action="{% url 'recommend' %}">
+                {% csrf_token %}
+                    <div style="display: flex;">
+                        <div>
+                            <h2 style="margin-left: 20px;">전처리 방식 선택</h2>
+
+                            <div class="checkblock">
+                                <label><input type="checkbox" name="checkboxes" id="nlp_op1" value="kor">한국어 전처리</label><br>
+                                <label><input type="checkbox" name="checkboxes" id="nlp_op2" value="eng">영어 전처리</label><br>
+                                <label><input type="checkbox" name="checkboxes" value="tag_imb">태그 불균형 처리</label><br>
+                                <label><input type="checkbox" name="checkboxes" value="gnr_imb">장르 불균형 처리</label><br>
+                                <label><input type="checkbox" name="checkboxes" value="gnr_cv_tf">장르 임베딩 방식 전환<br>(기본값: CV, 체크시: TF)</label><br>
+                            </div>
+
+                            <script>
+                                $('#nlp_op1').change(function() {
+                                    if (this.checked) {
+                                        $('#nlp_op2').prop('checked', false);
+                                    }
+                                });
+                                $('#nlp_op2').change(function() {
+                                    if (this.checked) {
+                                        $('#nlp_op1').prop('checked', false);
+                                    }
+                                });
+                            </script>
+                        </div>
+
+                        <button type="submit" id="recommend" class="recommend button" name="recommend">음악 추천</button>
+
+                    </div>
+            </form>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="searchblock">
+        {% if recommend_res %}
+            <div style="display: flex; margin-bottom: -30px;">
+                <h2>추천 결과</h2>
+                <form method="post" action="{% url 'clear_session' %}">
+                    {% csrf_token %}
+                    <button type="submit" id="sample_clear" class="add button" name="sample_clear">샘플<br>초기화</button>
+                </form>
+            </div>
+            <div class="scrollbar addbr">
+                {% csrf_token %}
+                <table class="recommendtable" align="center">
+                    <thead>
+                        <tr>
+                            <th>노래 제목</th>
+                            <th>ID</th>
+                            <th>태그</th>
+                            <th>태그 유사도</th>
+                            <th>장르</th>
+                            <th>장르 유사도</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for result in recommend_res %}
+                            <tr>
+                                <td>{{ result.7 }}</td>
+                                <td align="center">{{ result.1 }}</td>
+                                <td align="left">
+                                    {% for tag in result.0 %}
+                                        {% if not forloop.last %}
+                                        {{ tag }},
+
+                                        {% else %}
+                                        {{ tag }}
+
+                                        {% endif %}
+                                    {% endfor %}
+                                </td>
+                                <td>{{ result.12|floatformat:2 }}</td>
+                                <td>
+                                    {% for genre in result.3 %}
+                                        {% if not forloop.last %}
+                                        {{ genre }},
+
+                                        {% else %}
+                                        {{ genre }}
+
+                                        {% endif %}
+                                    {% endfor %}
+                                </td>
+                                <td>{{ result.11|floatformat:2 }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p>추천 결과가 없습니다.</p>
+            <br>
+        {% endif %}
+        {% if para_output %}
+            <p>적용된 전처리 기법 : {{ para_output }}</p>
+        {% else %}
+            <p>적용된 전처리 기법 : 없음</p>
+        {% endif %}
+        {% if eval_list %}
+            <p>Precision@10 : {{ eval_list.0|floatformat:2 }}</p>
+        {% endif %}
+    </div>
+
+</body>
+</html>
