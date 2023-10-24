@@ -27,12 +27,13 @@
 
 ### 5.1 웹 페이지 및 실험 (Music_Recommend_Web)
 1. 웹 페이지 실행을 위해 PyCharm에서 Django를 설치해야합니다. [How to Download Django](https://docs.djangoproject.com/ko/4.2/intro/install/)
-2. 추가적으로 설치해야 할 라이브러리 목록입니다.
+2. PyCharm 터미널에서 추가적으로 설치해야 할 라이브러리 목록입니다.
     - ```pandas```
     - ```gensim```
     - ```scikit_learn```
     - ```google_trans```
     - ```nltk```
     - ```konlpy```
-3. PyCharm에서 프로젝트를 생성 후, ```./Music_Recommend_Web``` 경로에서 ```python manage.py runserver``` 명령어를 입력해 서버를 실행합니다.
-4. 웹에서 ```127.0.0.1:8000/polls/```을 입력해 음악 추천 페이지에 접근합니다.
+3. PyCharm에서 프로젝트를 생성 후, ```./Music_Recommend_Web/polls/Datasets/``` 경로에 ```song_meta_with_likes.json```파일을 추가합니다.
+4. PyCahrm 터미널의 ```./Music_Recommend_Web/``` 경로에서 ```python manage.py runserver``` 명령어를 입력해 서버를 실행합니다.
+5. 웹에서 ```127.0.0.1:8000/polls/```을 입력해 음악 추천 페이지에 접근합니다.
