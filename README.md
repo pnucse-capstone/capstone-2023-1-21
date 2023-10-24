@@ -25,6 +25,10 @@
 
 ### 5. 설치 및 사용법
 
+```song_meta_with_likes.json```파일은 용량 제한으로 인해, 외부에서 다운받아 아래 지정한 경로에 추가해야합니다. [데이터셋 다운](https://drive.google.com/file/d/1762ZT67g2ZibxA3dl69tdnk4NsW3hEjQ/view?usp=drive_link)
+- ```Recommend_Model``` : ```./Recommend_Model/Datasets/```
+- ```Music_Recommend_Web``` : ```./Music_Recommend_Web/polls/Datasets/```
+
 ### 5.1 웹 페이지 및 실험 (Music_Recommend_Web)
 1. 웹 페이지 실행을 위해 PyCharm에서 Django를 설치해야합니다. [How to Download Django](https://docs.djangoproject.com/ko/4.2/intro/install/)
 2. PyCharm 터미널에서 추가적으로 설치해야 할 라이브러리 목록입니다.
