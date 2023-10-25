@@ -47,9 +47,9 @@
 추천 모델은 샘플링된 플레이리스트 수, 각종 전처리 적용 여부에 따라 다른 결과를 도출합니다.
 
 1. 추천 모델의 샘플링 수는 프로젝트의 ```./Music_Recommender_System/polls/views.py``` line 59의 n 값을 수정하여 변경할 수 있습니다.
-2. 음악을 검색해 선택할 수 있으며 ```선택한 음악 추가```를 눌러 목록에 추가할 수 있습니다.
+2. 음악을 검색해 선택할 수 있으며 ```선택한 음악 추가```를 눌러 사용자 플레이리스트의 음악 목록에 추가할 수 있습니다.
 ![음악 검색](https://ifh.cc/g/vS201Q.png)
-3. 태그를 입력하여 ```태그 추가```를 눌러 목록에 추가할 수 있습니다.
+3. 태그를 입력하여 ```태그 추가```를 눌러 사용자 플레이리스트의 태그 목록에 추가할 수 있습니다.
 ![태그 추가](https://ifh.cc/g/xhOKVP.png)
 4. 각종 전처리는 웹 페이지의 ```전처리 방식 선택```에서 변경할 수 있습니다.
 <img src="https://ifh.cc/g/OrX4ZD.png" width="300" height="400"/>
@@ -64,14 +64,37 @@
 
 5. ```음악 추천```을 눌러 음악과 태그 목록, 전처리 적용 여부를 고려하여 음악을 추천 받을 수 있습니다.
 
-### 5.3 추천 모델
-음악 추천 모델이 사용하는 매개 변수는 sample_index, user_tags, user_songs, prepro_para가 있습니다.
+### 5.3 결과 분석에 사용된 추천 모델 코드
+결과 분석을 위한 데이터 수집은 ```./Music_Recommender_System/polls/Recommend_Model_Tester.ipynb```의 코드를 사용했습니다. 이 코드에서 사용된 음악 추천 모델의 매개 변수 중 모델과 전처리 방식 선택에 관련한 매개 변수는 ```param```이라는 이름의 리스트 변수로 관리했습니다.
 
-* sample_index - 샘플링된 음악 목록
-* user_tags - 사용자의 태그 목록
-* user_songs - 사용자의 음악 목록
-* prepro_para - 전처리 적용 여부
-    *  prepro_para[0] - 태그 자연어 전처리 ( 0: 미적용, 1: 한국어 전처리, 2: 영어 전처리 )
-    *  prepro_para[1] - 태그 불균형 처리 ( False: 미적용, True: 적용 )
-    *  prepro_para[2] - 장르 불균형 처리 ( False: 미적용, True: 적용 )
-    *  prepro_para[3] - 장르 임베딩 방식 ( 'cv': CountVectorizer, 'tf': TF-IDF )
+음악 추천 모델에서 ```param```으로 관리되지 않는 매개 변수는 ```test_my_songs```, ```test_my_tags```, ```song_tag_appended```, ```w2v```, ```weight_mat_cv```, ```weight_mat_tf```, ```tag_weights```, ```tag_weights_all```입니다.
+
+음악 추천 모델에서 ```param```으로 관리되는 매개 변수는 ```rec_num```, ```simi_mode```, ```tag_imb```, ```genre_imb```, ```mode```, ```weight_mode```, ```tag_mode```입니다.
+    
+* test_my_songs - 사용자 플레이리스트의 음악 목록
+
+* test_my_tags - 사용자 플레이리스트의 태그 목록
+
+* song_tag_appended - 샘플링된 플레이리스트의 음악, 태그 목록
+
+* w2v - 학습된 Word2Vec 모델
+
+* weight_mat_cv, weight_mat_tf - 가중치가 적용된 장르 임베딩 벡터 행렬 ( CountVectorizer, TF-IDF )
+
+* tag_weights, tag_weights_all - 가중치가 적용된 태그 임베딩 벡터 ( 최대치 기반 가중치 부여 방식, 전체 개수 기반 가중치 부여 방식 )
+
+* param - 값의 변경이 필요한 매개 변수 리스트
+
+    *  rec_num - Feature 우선순위에 따른 모델 선택 ( 1: 장르 유사도 우선 모델, 2: 태그 유사도 우선 모델 )
+
+    *  simi_mode - 유사도 측정 방식에 따른 모델 선택 ( 'cos': 코사인 유사도 사용 모델, 'pea': 피어슨 유사도 사용 모델 )
+
+    *  tag_imb - 태그 불균형 처리 ( False: 미적용, True: 적용 )
+
+    *  genre_imb - 장르 불균형 처리 ( False: 미적용, True: 적용 )
+
+    *  mode - 장르 임베딩 방식 ( 'cv': CountVectorizer, 'tf': TF-IDF )
+
+    *  weight_mode - 장르 불균형 처리 적용 방식 ( 0: 최대치 기반 가중치 부여 방식, 1: 전체 개수 기반 가중치 부여 방식)
+
+    *  tag_mode - 태그 불균형 처리 적용 방식 ( 0: 최대치 기반 가중치 부여 방식, 1: 전체 개수 기반 가중치 부여 방식)
