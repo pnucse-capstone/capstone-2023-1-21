@@ -10,9 +10,11 @@
 
 진현, emil5322@pusan.ac.kr, 개발총괄
 
-임우영, pigwoo98@pusan.ac.kr, 알고리즘 설계
+임우영, pigwoo98@pusan.ac.kr, 태그 전처리, 음악 추천 사이트 로직 구현
 
 김영수, kimyeong3732@pusan.ac.kr, 백앤드 개발
+
+공통, 음악 추천 모델 개발
 
 ### 3. 시스템 구성도
 
@@ -26,10 +28,9 @@
 ### 5. 설치 및 사용법
 
 ```song_meta_with_likes.json```파일은 용량 제한으로 인해, 외부에서 다운받아 아래 지정한 경로에 추가해야합니다. [데이터셋 다운](https://drive.google.com/file/d/1762ZT67g2ZibxA3dl69tdnk4NsW3hEjQ/view?usp=drive_link)
-- ```Recommend_Model``` : ```./Recommend_Model/Datasets/```
-- ```Music_Recommend_Web``` : ```./Music_Recommend_Web/polls/Datasets/```
+- ```./Music_Recommender_System/polls/Datasets/```
 
-### 5.1 웹 페이지 및 실험 (Music_Recommend_Web)
+### 5.1 웹 페이지 및 실험
 1. 웹 페이지 실행을 위해 PyCharm에서 Django를 설치해야합니다. [How to Download Django](https://docs.djangoproject.com/ko/4.2/intro/install/)
 2. PyCharm에서 프로젝트를 생성합니다.
 3. PyCharm에서 추가적으로 설치해야 할 라이브러리 목록입니다.
@@ -39,5 +40,5 @@
     - ```google_trans```
     - ```nltk```
     - ```konlpy```
-4. PyCharm의 ```./Music_Recommend_Web/``` 경로에서 ```python manage.py runserver``` 명령어를 입력해 서버를 실행합니다.
+4. PyCharm의 ```./Music_Recommender_System/``` 경로에서 ```python manage.py runserver``` 명령어를 입력해 서버를 실행합니다.
 5. 웹에서 ```127.0.0.1:8000/polls/```을 입력해 음악 추천 페이지에 접근합니다.
