@@ -8,7 +8,7 @@
 
 ### 2. 팀소개
 
-진현, emil5322@pusan.ac.kr, 개발총괄
+진현, emil5322@pusan.ac.kr, 음악 추천 사이트 모듈 구현, 결과 분석
 
 임우영, pigwoo98@pusan.ac.kr, 태그 전처리, 음악 추천 사이트 로직 구현
 
