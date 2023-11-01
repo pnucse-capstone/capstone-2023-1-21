@@ -1,4 +1,4 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/fnZ3vxy8)
+![image](https://github.com/pnucse-capstone/capstone-2023-1-21/assets/91113018/8d089a6e-4327-4d2d-8227-cf387d519243)[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/fnZ3vxy8)
 
 ### 1. 프로젝트 소개
 
@@ -21,9 +21,7 @@
 ![음악 추천 모델 구상도](https://ifh.cc/g/V4Ahj9.jpg)
 
 ### 4. 소개 및 시연 영상
-
-[![부산대학교 정보컴퓨터공학부 소개](http://img.youtube.com/vi/zh_gQ_lmLqE/0.jpg)](https://youtu.be/zh_gQ_lmLqE)
-추후 업데이트
+[![부산대학교 정보컴퓨터공학부 사로나이트](http://img.youtube.com/vi/sovnBgjDOIE/0.jpg)](https://www.youtube.com/watch?v=sovnBgjDOIE)
 
 ### 5. 설치 및 사용법
 
